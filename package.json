@@ -1,5 +1,5 @@
 {
-  "name": "redux-helpers",
+  "name": "template-redux-helpers",
   "version": "1.1.0",
   "description": "This is a package to create reducers and actions in Redux",
   "main": "src/index.js",
