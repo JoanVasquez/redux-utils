@@ -23,6 +23,11 @@ export const actionTest = () => {
     dispatch(actionCreator(ANY_ACTION_TYPE, "payload")("hello world"));
   };
 };
+
+OR 
+
+export const actionTest = actionCreator(types.ANY_ACTION_TYPE, "payload");
+// and inside of the react component actionTest("hello world");
 ```
 
 ---
@@ -47,4 +52,32 @@ const reducers = {
 }
 
 export default reducerCreator(initialState, reducers);
+
+```
+# How can we create our Thunk Actions?
+
+To create any Action Thunk we need to set a callback that will receive three parameters from the actionThunkCreator function. A first parameter is an object with the parameters to be used inside the thunk context. The second is the dispatch function to invoke other async actions inside of our thunk context, and the third is the getState function to get the full redux store.
+
+```javascript
+import { actionCreator, actionThunkCreator } from "template-redux-helpers";
+
+
+const getDoctorByIdStart = actionCreator(types.DOCTOR_FETCH_ID_INIT);
+const getDoctorByIdComplete = actionCreator(types.DOCTOR_FETCH_ID_COMPLETE, 'data')
+const getDoctorByIdError = actionCreator(types.DOCTOR_FETCH_ID_ERROR, 'payload');
+
+
+export const getDoctorById = actionThunkCreator((id, dispatch) => {
+  dispatch(getDoctorByIdStart());
+
+  DoctorService
+    .getById(id)
+    .then(data => {
+      dispatch(getDoctorByIdComplete(data));
+    }).catch((err) => {
+        dispatch(getDoctorByIdError(err));
+      });
+});
+
+
 ```

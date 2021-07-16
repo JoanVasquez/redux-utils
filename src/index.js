@@ -21,7 +21,16 @@ const actionCreator = (type, ...argNames) => {
   };
 };
 
+export function actionThunkCreator(fn) {
+  return (value) => {
+    return (dispatch, getState) => {
+      fn(value, dispatch, getState);
+    }
+  }
+}
+
 module.exports = {
   reducerCreator,
   actionCreator,
+  actionThunkCreator
 };
